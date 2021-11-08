@@ -8,7 +8,6 @@
 
     document.querySelector("#sender-start-con-btn").addEventListener("click", function(){
         let joinID = generateID();
-        console.log(joinID)
         document.querySelector("#join-id").innerHTML = `<b>Room Id</b><span>${joinID}</span>`; 
 
         socket.emit("sender-join", {
