@@ -7,23 +7,23 @@ const io = require('socket.io')(server)
 
 app.use(express.static(__dirname + "/public"));
 
-io.on('connection', function(socket){
-    socket.on('sender-join', function(data){
-        socket.join(data.uid);
-    });
-    socket.on('reciever-join', function(data){
-        socket.join(data.uid);
-        socket.in(data.sender_uid).emit("init",data.uid);
-    });
-    socket.on('file-meta', function(data){
-        socket.in(data.uid).emit("fs-meta", data.metadata);
-    });
-    socket.on('fs-start', function(data){
-        socket.in(data.uid).emit("fs-share", {});
-    });
-    socket.on('file-raw', function(data){
-        socket.in(data.uid).emit("fs-share", data.buffer);
-    });
-})
+io.on('connection', (socket) => {
+        socket.on('sender-join', (data) => {
+            socket.join(data.uid);
+        });
+        socket.on('reciever-join', (data) => {
+            socket.join(data.uid);
+            socket.in(data.sender_uid).emit("init", data.uid);
+        });
+        socket.on('file-meta', (data) => {
+            socket.in(data.uid).emit("fs-meta", data.metadata);
+        });
+        socket.on('fs-start', (data) => {
+            socket.in(data.uid).emit("fs-share", {});
+        });
+        socket.on('file-raw', (data) => {
+            socket.in(data.uid).emit("fs-share", data.buffer);
+        });
+    })
 
 server.listen(8000);
